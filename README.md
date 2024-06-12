@@ -1,6 +1,6 @@
 # Projeto RestAPI Loja de Livros
 
-Este é um projeto de uma API REST para uma loja de livros. O projeto foi desenvolvido para o GitHub e utiliza PostgreSQL como banco de dados.
+Este é um projeto de uma API REST para uma loja de livros. O projeto foi desenvolvido com o foco em fazer a gerencia de livros de uma loja utiliza PostgreSQL como banco de dados.
 
 ## Tecnologias Utilizadas
 
