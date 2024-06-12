@@ -2,6 +2,8 @@ package com.bookstore.jpa.models;
 
 import java.util.*;
 
+import javax.validation.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.*;
@@ -19,6 +21,7 @@ public class ReviewModel implements Serializable {
     private Integer id;
 
     @Column(nullable = false)
+    @NotEmpty(message = "o campo comment é obrigatorio")
     private String comment;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

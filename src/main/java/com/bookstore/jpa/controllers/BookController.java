@@ -2,8 +2,9 @@ package com.bookstore.jpa.controllers;
 
 import java.util.*;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.bookstore.jpa.models.AuthorModel;
 import com.bookstore.jpa.models.BookModel;
 import com.bookstore.jpa.repositorys.BookRepository;
 
@@ -30,7 +30,7 @@ public class BookController {
     BookRepository bookRepository;
 
     @PostMapping("/save")
-    public ResponseEntity<BookModel> save(@RequestBody BookModel bookModel) {
+    public ResponseEntity<BookModel> save(@RequestBody @Valid BookModel bookModel) {
         bookRepository.save(bookModel);
         return new ResponseEntity<>(bookModel, HttpStatus.CREATED);
     }
@@ -55,7 +55,7 @@ public class BookController {
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateBook(@PathVariable Integer id, @RequestBody BookModel book) {
+    public void updateBook(@PathVariable Integer id, @RequestBody @Valid BookModel book) {
         bookRepository.findById(id).map(encontrado -> {
             book.setId(encontrado.getId());
             bookRepository.save(book);

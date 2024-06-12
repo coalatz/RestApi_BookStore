@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
+import javax.validation.constraints.NotEmpty;
+
 @Entity
 @Table(name = "TB_BOOK")
 public class BookModel implements Serializable {
@@ -15,10 +17,12 @@ public class BookModel implements Serializable {
     private Integer id;
 
     @Column(nullable = false, unique = true)
+    @NotEmpty(message = "o campo title é obrigatorio")
     private String title;
 
     @ManyToOne
     @JoinColumn(name = "publisher_id")
+    @NotEmpty(message = "o campo publisher é obrigatorio")
     private PublisherModel publisher;
 
     @ManyToMany

@@ -3,6 +3,8 @@ package com.bookstore.jpa.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +30,13 @@ public class AuthorController {
     AuthorRepository authorRepository;
 
     @PostMapping("/save")
-    public ResponseEntity<AuthorModel> save(@RequestBody AuthorModel author) {
-        authorRepository.save(author);
-        return new ResponseEntity<>(author, HttpStatus.CREATED);
+    public ResponseEntity save(@RequestBody @Valid AuthorModel author) {
+        try {
+            authorRepository.save(author);
+            return new ResponseEntity<>(author, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Erro ao salvar autor", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/{id}")
@@ -39,7 +45,7 @@ public class AuthorController {
         if (author.isPresent()) {
             return new ResponseEntity<>(author, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Autor nao encontrado.", HttpStatus.NOT_FOUND);
     }
 
     @DeleteMapping("/delete/{id}")
@@ -55,7 +61,7 @@ public class AuthorController {
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateId(@RequestBody AuthorModel author, @PathVariable Integer id) {
+    public void updateId(@RequestBody @Valid AuthorModel author, @PathVariable Integer id) {
         authorRepository.findById(id).map(encontrado -> {
             author.setId(encontrado.getId());
             authorRepository.save(author);

@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
+import javax.validation.constraints.NotEmpty;
+
 @Entity
 @Table(name = "TB_AUTHOR")
 public class AuthorModel implements Serializable {
@@ -16,6 +18,7 @@ public class AuthorModel implements Serializable {
     private Integer id;
 
     @Column(nullable = false, unique = true)
+    @NotEmpty(message = "o campo nome é obrigatorio")
     private String nome;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

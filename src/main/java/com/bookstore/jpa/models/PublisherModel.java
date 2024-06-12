@@ -2,6 +2,8 @@ package com.bookstore.jpa.models;
 
 import java.util.*;
 
+import javax.validation.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.*;
@@ -19,6 +21,7 @@ public class PublisherModel implements Serializable {
     private Integer id;
 
     @Column(nullable = false, unique = true)
+    @NotEmpty(message = "o campo nome é obrigatorio")
     private String nome;
 
     @OneToMany(mappedBy = "publisher", fetch = FetchType.LAZY)

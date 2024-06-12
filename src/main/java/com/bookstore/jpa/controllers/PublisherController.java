@@ -1,6 +1,9 @@
 package com.bookstore.jpa.controllers;
 
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +42,7 @@ public class PublisherController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<PublisherModel> save(@RequestBody PublisherModel publisher) {
+    public ResponseEntity<PublisherModel> save(@RequestBody @Valid PublisherModel publisher) {
         PublisherModel salvo = publisherRespository.save(publisher);
         return new ResponseEntity<>(salvo, HttpStatus.CREATED);
     }
@@ -61,7 +64,7 @@ public class PublisherController {
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody PublisherModel publisher, @PathVariable Integer id) {
+    public void update(@RequestBody @Valid PublisherModel publisher, @PathVariable Integer id) {
         publisherRespository.findById(id).map(encontrado -> {
             publisher.setId(encontrado.getId());
             publisherRespository.save(publisher);

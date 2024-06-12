@@ -2,6 +2,8 @@ package com.bookstore.jpa.controllers;
 
 import java.util.*;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +29,7 @@ public class ReviewController {
     ReviewRepository reviewRepository;
 
     @PostMapping("/save")
-    public ResponseEntity<ReviewModel> save(@RequestBody ReviewModel review) {
+    public ResponseEntity<ReviewModel> save(@RequestBody @Valid ReviewModel review) {
         ReviewModel salvo = reviewRepository.save(review);
         return new ResponseEntity<>(salvo, HttpStatus.CREATED);
     }
@@ -58,7 +60,7 @@ public class ReviewController {
 
     @PutMapping("/update/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody ReviewModel review, @PathVariable Integer id) {
+    public void update(@RequestBody @Valid ReviewModel review, @PathVariable Integer id) {
         reviewRepository.findById(id).map(encontrado -> {
             review.setId(encontrado.getId());
             reviewRepository.save(review);
