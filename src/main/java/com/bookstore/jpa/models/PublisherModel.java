@@ -2,11 +2,10 @@ package com.bookstore.jpa.models;
 
 import java.util.*;
 
-import javax.validation.constraints.NotEmpty;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.io.Serializable;
 

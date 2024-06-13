@@ -1,6 +1,8 @@
 package com.bookstore.jpa.controllers;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -8,7 +10,10 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,13 +35,9 @@ public class AuthorController {
     AuthorRepository authorRepository;
 
     @PostMapping("/save")
-    public ResponseEntity save(@RequestBody @Valid AuthorModel author) {
-        try {
-            authorRepository.save(author);
-            return new ResponseEntity<>(author, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Erro ao salvar autor", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<AuthorModel> save(@RequestBody @Valid AuthorModel author) {
+        authorRepository.save(author);
+        return new ResponseEntity<>(author, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -49,6 +50,7 @@ public class AuthorController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Integer id) {
         authorRepository
                 .findById(id)
@@ -74,4 +76,5 @@ public class AuthorController {
     public List<AuthorModel> allAuthors() {
         return authorRepository.findAll();
     }
+
 }

@@ -1,10 +1,10 @@
 package com.bookstore.jpa.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+
 import java.io.Serializable;
 import java.util.*;
-
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "TB_BOOK")
